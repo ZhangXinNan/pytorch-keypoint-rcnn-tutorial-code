@@ -40,3 +40,13 @@
 *.m4v
 *.3gp
 *.3g2
+
+.DS_Store
+.idea/
+.vscode/
+__pycache__/
+*.zip
+*.pth
+*.pt
+Datasets/
+glue_tubes_keypoints_dataset_134imgs/
