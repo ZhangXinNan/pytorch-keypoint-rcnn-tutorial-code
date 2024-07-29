@@ -6,7 +6,8 @@ from cjm_pil_utils.core import resize_img, get_img_files, stack_imgs
 import pandas as pd
 from tqdm.auto import tqdm
 
-
+# Loading and Exploring the Dataset
+# Setting the Dataset Path
 # Set the name of the dataset
 dataset_name = 'labelme-keypoint-eyes-noses-dataset'
 
@@ -26,37 +27,16 @@ pd.Series({
     "Dataset Path:": dataset_path
 }).to_frame().style.hide(axis='columns')
 
-# Downloading the Dataset
-# Construct the HuggingFace Hub dataset URL
-dataset_url = f"https://huggingface.co/datasets/{hf_dataset}/resolve/main/{dataset_name}.zip"
-print(f"HuggingFace Dataset URL: {dataset_url}")
-
-# Set whether to delete the archive file after extracting the dataset
-delete_archive = True
-
-# Download the dataset if not present
-if dataset_path.is_dir():
-    print("Dataset folder already exists")
-else:
-    print("Downloading dataset...")
-    download_file(dataset_url, archive_dir)
-
-    print("Extracting dataset...")
-    file_extract(fname=archive_path, dest=dataset_dir)
-
-    # Delete the archive if specified
-    if delete_archive: archive_path.unlink()
-
 
 # Get Image File Paths
 # Get a list of image files in the dataset
 img_file_paths = get_img_files(dataset_path)
 
 # Create a dictionary that maps file names to file paths
-img_dict = {file.stem : file for file in (img_file_paths)}
+img_dict = {file.stem: file for file in (img_file_paths)}
 
 # Print the number of image files
-print(f"Number of Images: {len(img_dict)}")
+# print(f"Number of Images: {len(img_dict)}")
 
 # Display the first five entries from the dictionary using a Pandas DataFrame
 pd.DataFrame.from_dict(img_dict, orient='index').head()
@@ -78,6 +58,36 @@ annotation_df = annotation_df.set_index('index')
 # Keep only the rows that correspond to the filenames in the 'img_dict' dictionary
 annotation_df = annotation_df.loc[list(img_dict.keys())]
 
-# Print the first 5 rows of the DataFrame
-print(annotation_df.head())
+
+def main():
+    # Print the number of image files
+    print(f"Number of Images: {len(img_dict)}")
+
+    # Print the first 5 rows of the DataFrame
+    print(annotation_df.head())
+
+
+if __name__ == '__main__':
+    # Downloading the Dataset
+    # Construct the HuggingFace Hub dataset URL
+    dataset_url = f"https://huggingface.co/datasets/{hf_dataset}/resolve/main/{dataset_name}.zip"
+    print(f"HuggingFace Dataset URL: {dataset_url}")
+
+    # Set whether to delete the archive file after extracting the dataset
+    delete_archive = True
+
+    # Download the dataset if not present
+    if dataset_path.is_dir():
+        print("Dataset folder already exists")
+    else:
+        print("Downloading dataset...")
+        download_file(dataset_url, archive_dir)
+
+        print("Extracting dataset...")
+        file_extract(fname=archive_path, dest=dataset_dir)
+
+        # Delete the archive if specified
+        if delete_archive: archive_path.unlink()
+
+    main()
 

@@ -5,6 +5,10 @@ import torchvision.transforms.v2 as transforms
 from cjm_torchvision_tfms.core import ResizeMax, PadSquare, CustomRandomIoUCrop #, RandomPixelCopy
 
 
+# Data Augmentation
+# Set training image size
+train_sz = 512
+
 # Create a RandomIoUCrop object
 iou_crop = CustomRandomIoUCrop(min_scale=0.3,
                                max_scale=1.0,
@@ -14,6 +18,11 @@ iou_crop = CustomRandomIoUCrop(min_scale=0.3,
                                trials=400,
                                jitter_factor=0.25)
 
+# Create a `ResizeMax` object
+resize_max = ResizeMax(max_sz=train_sz)
+
+# Create a `PadSquare` object
+pad_square = PadSquare(shift=True)
 
 # Image Transforms
 # Compose transforms for data augmentation
@@ -55,3 +64,4 @@ train_tfms = transforms.Compose([
     final_tfms
 ])
 valid_tfms = transforms.Compose([resize_pad_tfm, final_tfms])
+

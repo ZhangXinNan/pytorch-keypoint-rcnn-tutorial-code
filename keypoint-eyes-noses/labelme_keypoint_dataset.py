@@ -1,9 +1,14 @@
+# %%writefile windows_utils.py
 
-import os
-import numpy as np
+from torch.utils.data import Dataset
 import torch
 import torchvision
-from torch.utils.data import Dataset, DataLoader
+torchvision.disable_beta_transforms_warning()
+from torchvision.tv_tensors import BoundingBoxes, Mask
+import torchvision.transforms.v2  as transforms
+
+from PIL import Image, ImageDraw
+import numpy as np
 
 
 class LabelMeKeypointDataset(Dataset):
@@ -162,7 +167,8 @@ class LabelMeKeypointDataset(Dataset):
         return target
 
 
-
+def tuple_batch(batch):
+    return tuple(zip(*batch))
 
 
 
