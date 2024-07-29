@@ -1,3 +1,5 @@
+pandas
+jupyter
 cjm_pandas_utils
 cjm_pil_utils
 cjm_psl_utils
