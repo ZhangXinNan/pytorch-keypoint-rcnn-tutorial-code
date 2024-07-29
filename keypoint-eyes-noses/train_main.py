@@ -33,7 +33,10 @@ def main():
     seed = 123
     set_seed(seed)
     # Setting the Device and Data Type
-    device = get_torch_device()
+    if torch.cuda.is_available():
+        device = get_torch_device()
+    else:
+        device = 'cpu'
     dtype = torch.float32
     print(device, dtype)
 

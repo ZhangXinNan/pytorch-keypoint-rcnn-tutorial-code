@@ -5,6 +5,7 @@ from tqdm.auto import tqdm
 from pathlib import Path
 import torch
 import torchvision
+from torch.amp import autocast
 from contextlib import contextmanager
 from cjm_pytorch_utils.core import set_seed, pil_to_tensor, tensor_to_pil, get_torch_device, denorm_img_tensor, move_data_to_device
 
